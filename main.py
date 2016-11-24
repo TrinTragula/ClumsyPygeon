@@ -24,15 +24,18 @@ black = ["r","n","b","q","k","p"]
 
 # Valore dei pezzi
 piece_value = {"r" : -5, "n" : -3, "b" : -3 ,"q" : -9,"k" : -9999999 ,"p" : -1, \
-               "R" :  5, "N" :  3, "B" :  3 ,"Q" :  9,"K" :  9999999 ,"P" :  1}
+               "R" :  5, "N" :  3, "B" :  3 ,"Q" :  9,"K" :  9999999 ,"P" :  1, "0" : 0}
+
+movelist = []
 
 #------------------------------------------------
 # Controllo se una posizione porta allo scacco
 #------------------------------------------------
 def ischeck(start, end):
     global board
+    boardbackup = board
 
-    move(start, end)
+    move(start,end)
 
     ren = board.index("k")
     reb = board.index("K")
@@ -40,15 +43,18 @@ def ischeck(start, end):
     if tratto == 1 :
         for i in range(len(board)):
             if not islegal( i, reb ):
-                move(end, start)
+                move(end,start)
+                board = boardbackup
                 return 1
     if tratto == 0 :
         for i in range(len(board)):
             if not islegal( i, ren ):
-                move(end, start)
+                move(end,start)
+                board = boardbackup
                 return 1
 
-    move(end, start)
+    move(end,start)
+    board = boardbackup
     return 0
 
 
@@ -91,12 +97,12 @@ def islegal( start, end ):
         #############################
         if board[start] == "r":
             # Controllo che si muova in orizzontale o verticale
-            if (end % 8) != start and (start/8 != end/8):
+            if (end % 8 != start % 8) and (start/8 != end/8):
                 return 1
             # Controllo che la torre non passi sopra nessun pezzo
 
             # Mossa veritcale
-            if (end % 8) == start:
+            if (end % 8) == (start % 8):
                 # verso giu
                 if start < end:
                     end_line = end / 8
@@ -125,7 +131,7 @@ def islegal( start, end ):
                 if start > end:
                     diff = end - start
                     for i in range(1,diff):
-                        if board[start + i] != "0":
+                        if board[start - i] != "0":
                             return 1
             return 0
 
@@ -153,10 +159,14 @@ def islegal( start, end ):
         #############################
         if board[start] == "n":
             # Il cavallo si muove a L
-            if      end != (start + 8 + 8 + 1) and end != (start + 8 + 8 - 1) \
-                and end != (start + 1 + 1 + 8) and end != (start + 1 + 1 - 8) \
-                and end != (start - 8 - 8 + 1) and end != (start - 8 - 8 - 1) \
-                and end != (start - 1 - 1 + 8) and end != (start - 1 - 1 - 8):
+            if      (end != (start + 8 + 8 + 1) or (start/8 != (end/8 -2))) \
+                and (end != (start + 8 + 8 - 1) or (start/8 != (end/8 -2))) \
+                and (end != (start + 1 + 1 + 8) or (start/8 != (end/8 -1))) \
+                and (end != (start + 1 + 1 - 8) or (start/8 != (end/8 -1))) \
+                and (end != (start - 8 - 8 + 1) or (start/8 != (end/8 -2))) \
+                and (end != (start - 8 - 8 - 1) or (start/8 != (end/8 -2))) \
+                and (end != (start - 1 - 1 + 8) or (start/8 != (end/8 -1))) \
+                and (end != (start - 1 - 1 - 8) or (start/8 != (end/8 -1))):
                 return 1
             return 0
 
@@ -164,6 +174,7 @@ def islegal( start, end ):
         # RE NERO
         #############################
         if board[start] == "k":
+
             # Il re si muove di uno in qualsivoglia direzione
             if      end != (start + 1) and end != (start - 1) \
                 and end != (start + 8) and end != (start - 8) \
@@ -242,7 +253,8 @@ def islegal( start, end ):
             diff = abs(rigain - rigaout)
 
             #se si può raggiungere
-            if end % 7 != start % 7 and end % 9 != start % 9 and (end % 8) != start and (start/8 != end/8):
+            if      (end % 7 != start % 7) and (end % 9 != start % 9)\
+                and (end % 8 != start % 8) and (start/8 != end/8):
                 return 1
 
             # Diagonali
@@ -291,36 +303,36 @@ def islegal( start, end ):
             #Traverse
 
             # Mossa veritcale
-            if (end % 8) == start:
+            if (end % 8) == (start % 8):
                 # verso giu
                 if start < end:
                     end_line = end / 8
                     start_line = start / 8
-                    diff = end_line - start_line
-                    for i in range(1,diff):
+                    diffo = end_line - start_line
+                    for i in range(1,diffo):
                         if board[start + i*8] != "0":
                             return 1
                 #verso su
                 if start > end:
                     end_line = end / 8
                     start_line = start / 8
-                    diff = start_line - end_line
-                    for i in range(1,diff):
+                    diffo = start_line - end_line
+                    for i in range(1,diffo):
                         if board[start - i * 8] != "0":
                             return 1
             # Mossa orizzontale
             if (start/8 == end/8):
                 # verso destra
                 if start < end:
-                    diff = end - start
-                    for i in range(1,diff):
+                    diffo = end - start
+                    for i in range(1,diffo):
                         if board[start + i] != "0":
                             return 1
                 # verso sinistra
                 if start > end:
-                    diff = end - start
-                    for i in range(1,diff):
-                        if board[start + i] != "0":
+                    diffo = end - start
+                    for i in range(1,diffo):
+                        if board[start - i] != "0":
                             return 1
 
 
@@ -341,7 +353,7 @@ def islegal( start, end ):
             # Controllo che la torre non passi sopra nessun pezzo
 
             # Mossa veritcale
-            if (end % 8) == start:
+            if (end % 8) == (start % 8):
                 # verso giu
                 if start < end:
                     end_line = end / 8
@@ -370,7 +382,7 @@ def islegal( start, end ):
                 if start > end:
                     diff = end - start
                     for i in range(1, diff):
-                        if board[start + i] != "0":
+                        if board[start - i] != "0":
                             return 1
             return 0
 
@@ -399,10 +411,14 @@ def islegal( start, end ):
         #############################
         if board[start] == "N":
             # Il cavallo si muove a L
-            if end != (start + 8 + 8 + 1) and end != (start + 8 + 8 - 1) \
-                    and end != (start + 1 + 1 + 8) and end != (start + 1 + 1 - 8) \
-                    and end != (start - 8 - 8 + 1) and end != (start - 8 - 8 - 1) \
-                    and end != (start - 1 - 1 + 8) and end != (start - 1 - 1 - 8):
+            if      (end != (start + 8 + 8 + 1) or (start/8 != (end/8 -2))) \
+                and (end != (start + 8 + 8 - 1) or (start/8 != (end/8 -2))) \
+                and (end != (start + 1 + 1 + 8) or (start/8 != (end/8 -1))) \
+                and (end != (start + 1 + 1 - 8) or (start/8 != (end/8 +1))) \
+                and (end != (start - 8 - 8 + 1) or (start/8 != (end/8 +2))) \
+                and (end != (start - 8 - 8 - 1) or (start/8 != (end/8 +2))) \
+                and (end != (start - 1 - 1 + 8) or (start/8 != (end/8 -1))) \
+                and (end != (start - 1 - 1 - 8) or (start/8 != (end/8 +1))):
                 return 1
             return 0
 
@@ -488,7 +504,8 @@ def islegal( start, end ):
             diff = abs(rigain - rigaout)
 
             #se si può raggiungere
-            if end % 7 != start % 7 and end % 9 != start % 9 and (end % 8) != start and (start/8 != end/8):
+            if      (end % 7 != start % 7) and (end % 9 != start % 9)\
+                and (end % 8 != start % 8) and (start/8 != end/8):
                 return 1
 
             # Diagonali
@@ -537,40 +554,41 @@ def islegal( start, end ):
             #Traverse
 
             # Mossa veritcale
-            if (end % 8) == start:
+            if (end % 8) == (start % 8):
                 # verso giu
                 if start < end:
                     end_line = end / 8
                     start_line = start / 8
-                    diff = end_line - start_line
-                    for i in range(1,diff):
+                    diffu = end_line - start_line
+                    for i in range(1,diffu):
                         if board[start + i*8] != "0":
                             return 1
                 #verso su
                 if start > end:
                     end_line = end / 8
                     start_line = start / 8
-                    diff = start_line - end_line
-                    for i in range(1,diff):
+                    diffu = start_line - end_line
+                    for i in range(1,diffu):
                         if board[start - i * 8] != "0":
                             return 1
             # Mossa orizzontale
             if (start/8 == end/8):
                 # verso destra
                 if start < end:
-                    diff = end - start
-                    for i in range(1,diff):
+                    diffu = end - start
+                    for i in range(1,diffu):
                         if board[start + i] != "0":
                             return 1
                 # verso sinistra
                 if start > end:
-                    diff = end - start
-                    for i in range(1,diff):
-                        if board[start + i] != "0":
+                    diffu = end - start
+                    for i in range(1,diffu):
+                        if board[start - i] != "0":
                             return 1
 
 
             return 0
+
 
 
  ########################################################
@@ -578,13 +596,42 @@ def islegal( start, end ):
     else:
         return 1
 
-
-
-
-
 # ---------------------------------------------------
-# Funzione per stamapre la scacchiera sullo schermo
+# Generatore di mosse
 # ---------------------------------------------------
+def movegen():
+    movelist = []
+    for i in range(64):
+        if tratto == 1:
+            if board[i] in black:
+                for j in range(64):
+                    if not islegal(i,j):
+                        if not ischeck(i,j):
+                            movelist.append((i,j))
+        if tratto == 0:
+            if board[i] in white:
+                for k in range(64):
+                    if not islegal(i,k):
+                        if not ischeck(i,k):
+                            movelist.append((i,k))
+
+    if not movelist:
+        print "SCACCO MATTO!"
+        if tratto == 0:
+            print "Vince il Nero!"
+        if tratto == 1:
+            print "Vince il Bianco!"
+
+    return movelist
+
+#----------------------------------------------------
+# Valuta la posizione attuale sulla scacchiera
+#----------------------------------------------------
+def evaluate():
+    value = 0
+    for i in range(64):
+        value += int(piece_value[board[i]])
+    return value
 
 #convert names in unicode chess pieces
 def simbol(string):
@@ -615,6 +662,9 @@ def simbol(string):
 	if string == "0":
 		return "_"
 
+# ---------------------------------------------------
+# Funzione per stampare la scacchiera sullo schermo
+# ---------------------------------------------------
 def show():
 
     # Stampa i pezzi ed il contorno
@@ -633,7 +683,7 @@ def show():
     sys.stdout.write("|")
     print ""
 
-
+# From notation to stuff the program eats
 def notationToCase(string):
     #prende in input notazione simbolica e restituisce
     #qualcosa di comprensibile dal programma
@@ -651,6 +701,7 @@ def notationToCase(string):
     end = colout + 8 * (8 - rigout)
     return start, end
 
+#move the piece
 def move(start, end):
     #move a piece in the board
     global board
@@ -664,6 +715,8 @@ def move(start, end):
         tratto = 0
     return 0
 
+
+# routine to make life easier when implemeting uci
 def routine(start,end):
     #routine date mosse iniziali e finali
     #così per rendere piu semplice la futura implementazione uci
@@ -681,6 +734,8 @@ tratto = 0
 try:
  while(1):
     show()
+    print "Valutazione: " + str(evaluate())
+    print movegen()
     if tratto == 0 :
         print "Tocca al Bianco!"
     else:
@@ -702,9 +757,6 @@ try:
         continue
 
     routine(start,end)
-
-
-
 
 except KeyboardInterrupt:
     print ""
