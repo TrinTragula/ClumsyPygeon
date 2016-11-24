@@ -57,8 +57,6 @@ def ischeck(start, end):
     board = boardbackup
     return 0
 
-
-
 # ---------------------------------------------------
 # Funzione per controllare la legalita delle mosse
 # data una mossa di inizio ed una di fine
@@ -142,7 +140,7 @@ def islegal( start, end ):
             # Si muove solo verso giu
             # Dalla zona di partenza possono spostarsi di due
             if board[end] == "0":
-                if (start/8) == 1:
+                if (start/8) == 1 and (board[(start+8)]=="0"):
                     if end != (start + 8) and end != (start + 16):
                         return 1
                 else:
@@ -348,7 +346,7 @@ def islegal( start, end ):
         #########################
         if board[start] == "R":
             # Controllo che si muova in orizzontale o verticale
-            if (end % 8) != start and (start / 8 != end / 8):
+            if (end % 8 != start % 8) and (start/8 != end/8):
                 return 1
             # Controllo che la torre non passi sopra nessun pezzo
 
@@ -359,33 +357,32 @@ def islegal( start, end ):
                     end_line = end / 8
                     start_line = start / 8
                     diff = end_line - start_line
-                    for i in range(1, diff):
-                        if board[start + i * 8] != "0":
+                    for i in range(1,diff):
+                        if board[start + i*8] != "0":
                             return 1
-                # verso su
+                #verso su
                 if start > end:
                     end_line = end / 8
                     start_line = start / 8
                     diff = start_line - end_line
-                    for i in range(1, diff):
+                    for i in range(1,diff):
                         if board[start - i * 8] != "0":
                             return 1
             # Mossa orizzontale
-            if (start / 8 == end / 8):
+            if (start/8 == end/8):
                 # verso destra
                 if start < end:
                     diff = end - start
-                    for i in range(1, diff):
+                    for i in range(1,diff):
                         if board[start + i] != "0":
                             return 1
                 # verso sinistra
                 if start > end:
                     diff = end - start
-                    for i in range(1, diff):
+                    for i in range(1,diff):
                         if board[start - i] != "0":
                             return 1
             return 0
-
 
         #############################
         # PEDONE BIANCO
@@ -394,7 +391,7 @@ def islegal( start, end ):
             # Si muove solo verso su
             # Dalla zona di partenza possono spostarsi di due
             if board[end] == "0":
-                if (start/8) == 6:
+                if (start/8) == 6 and (board[(start-8)]=="0"):
                     if end != (start - 8) and end != (start - 16):
                         return 1
                 else:
@@ -628,10 +625,50 @@ def movegen():
 # Valuta la posizione attuale sulla scacchiera
 #----------------------------------------------------
 def evaluate():
+    global board
     value = 0
     for i in range(64):
         value += int(piece_value[board[i]])
-    return value
+    if tratto == 0:
+        return value
+    if tratto == 1:
+        return -value
+
+#----------------------------------------------------
+# Algoritmo di ricerca mosse negamax
+#----------------------------------------------------
+alpha = -999999999
+beta = 999999999
+bestmove=(0,0)
+def search(depth, alpha, beta):
+    global bestmove
+    global board
+    global tratto
+    mossa = (0,0)
+    best = -999999999
+    boardbackup = board
+    trattobackup= tratto
+    for i in movegen():
+        boardb = board
+        trattob = tratto
+        move(i[0], i[1])
+        if depth == 0:
+            score = evaluate()
+        else:
+            score = - search(depth - 1, -beta, -alpha)
+        board = boardb
+        tratto = trattob
+
+        if ( score > best ):
+            best = score
+            mossa = i
+        if ( best > alpha ):
+            alpha = best
+        if ( alpha >= beta):
+            mossa = i
+            return alpha
+    bestmove = mossa
+    return best
 
 #convert names in unicode chess pieces
 def simbol(string):
@@ -701,6 +738,18 @@ def notationToCase(string):
     end = colout + 8 * (8 - rigout)
     return start, end
 
+# From stuff the program eats to notation
+def caseToNotation(i,j):
+    colonne = {"a":0,"b":1,"c":2,"d":3,"e":4,"f":5,"g":6,"h":7}
+    mossa = ""
+    #trovo riga e colonna inziale e finale
+    rigain  = 8 - i/8
+    colin = colonne.keys()[colonne.values().index(i % 8)]
+    rigaout = 8 - j/8
+    colout = colonne.keys()[colonne.values().index(j % 8)]
+    mossa += str(colin) + str(rigain) + str(colout) + str(rigaout)
+    return mossa
+
 #move the piece
 def move(start, end):
     #move a piece in the board
@@ -714,7 +763,6 @@ def move(start, end):
     if tratto > 1:
         tratto = 0
     return 0
-
 
 # routine to make life easier when implemeting uci
 def routine(start,end):
@@ -733,9 +781,13 @@ def routine(start,end):
 tratto = 0
 try:
  while(1):
+    print "\n"*25
     show()
-    print "Valutazione: " + str(evaluate())
-    print movegen()
+    #print "Valutazione: " + str(evaluate())
+    #print "Mosee possibili: " + str(len(movegen())) + str(movegen())
+    bestscore = search(5, alpha, beta)
+    lamossa = str(caseToNotation(bestmove[0],bestmove[1]))
+    print "Mossa migliore: " + lamossa
     if tratto == 0 :
         print "Tocca al Bianco!"
     else:
@@ -744,7 +796,7 @@ try:
     print "Cosa vuol muovere, sir?"
     sys.stdout.write("Mossa > ")
     try:
-        notazione = raw_input()
+        notazione = lamossa#raw_input()
         if notazione == "exit":
             print ""
             print "Arrivederla!"
