@@ -1,25 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# DA FARE: CONTROLLARE PEDONI E RE
-
 import sys
-from string import ascii_lowercase, ascii_uppercase
-from boardvalue import boardvalue
-from boardvalue import boardvaluenero
+from string import ascii_lowercase
+
 
 # Rappresentazione della scacchiera
-boardbbbbb = "0000000k" \
-        "R0R00000" \
-        "00000000" \
-        "00000000" \
-        "00000000" \
-        "00000000" \
-        "PPPPPPPP" \
-        "RNBQKBNR"
-
-
-
 board = "rnbqkbnr" \
         "pppppppp" \
         "00000000" \
@@ -168,7 +154,7 @@ def islegal( start, end ):
                         return 1
             # Se invece mangia
             else:
-                if (end != (start + 9) and end!= (start+7)) or ((start/8 != (end/8 - 1) )):
+                if end != (start + 9) and end!= (start+7):
                     return 1
             return 0
 
@@ -194,13 +180,10 @@ def islegal( start, end ):
         if board[start] == "k":
 
             # Il re si muove di uno in qualsivoglia direzione
-            if      ((end != (start + 1) and end != (start - 1)) or (start/8 != end/8)) \
-                and ( (end != (start + 8)) or (start/8 +1 != end/8)) \
-                and ( (end != (start - 8)) or (start/8 -1 != end/8))\
-                and ( (end != (start + 9)) or (start/8 +1 != end/8))\
-                and ( (end != (start + 7)) or (start/8 +1 != end/8)) \
-                and ( (end != (start - 9)) or (start/8 -1 != end/8)) \
-                and ( (end != (start - 7)) or (start/8 -1 != end/8)):
+            if      end != (start + 1) and end != (start - 1) \
+                and end != (start + 8) and end != (start - 8) \
+                and end != (start + 9) and end != (start + 7)  \
+                and end != (start - 9) and end != (start - 7):
                 return 1
             return 0
 
@@ -422,7 +405,7 @@ def islegal( start, end ):
                         return 1
             # Se invece mangia
             else:
-                if (end != (start - 9) and end!= (start - 7)) or ((start/8 != end/8 + 1)):
+                if end != (start - 9) and end!= (start - 7):
                     return 1
             return 0
 
@@ -447,13 +430,10 @@ def islegal( start, end ):
         #############################
         if board[start] == "K":
             # Il re si muove di uno in qualsivoglia direzione
-            if      ((end != (start + 1) and end != (start - 1)) or (start/8 != end/8)) \
-                and ( (end != (start + 8)) or (start/8 +1 != end/8)) \
-                and ( (end != (start - 8)) or (start/8 -1 != end/8))\
-                and ( (end != (start + 9)) or (start/8 +1 != end/8))\
-                and ( (end != (start + 7)) or (start/8 +1 != end/8)) \
-                and ( (end != (start - 9)) or (start/8 -1 != end/8)) \
-                and ( (end != (start - 7)) or (start/8 -1 != end/8)):
+            if end != (start + 1) and end != (start - 1) \
+                    and end != (start + 8) and end != (start - 8) \
+                    and end != (start + 9) and end != (start + 7) \
+                    and end != (start - 9) and end != (start - 7):
                 return 1
             return 0
 
@@ -647,56 +627,15 @@ def evaluate():
     global board
     value = 0
     if tratto == 0:
-        value -= len(movegen())/100000.
+        value += len(movegen())/1000.
         for i in range(64):
-            value -= int(piece_value[board[i]])
-            if board[i] in ascii_uppercase:
-                value -= + int(boardvalue[board[i]][i])/110000.
-            if board[i] in ascii_lowercase:
-                value -= - int(boardvaluenero[board[i]][i])/110000.
-
+            value += - int(piece_value[board[i]])
     if tratto == 1:
-        value -= len(movegen())/100000.
+        value -= len(movegen())/1000.
         for i in range(64):
-            value += int(piece_value[board[i]])
-            if board[i] in ascii_uppercase:
-                value -= - int(boardvalue[board[i]][i])/110000.
-            if board[i] in ascii_lowercase:
-                value -= + int(boardvaluenero[board[i]][i])/110000.
+            value += + int(piece_value[board[i]])
 
     return value
-
-#---------------------------------------------------
-# Controlla se un pedone è nell'ultima fila
-# e puo venire promosso
-#---------------------------------------------------
-def check_promotion():
-    global board
-    for i in range(8):
-        if board[i] == "P":
-            scacchiera = list(board)
-            scacchiera[i] = "Q"
-            board = "".join(scacchiera)
-    for i in range(56,64):
-        if board[i] == "p":
-            scacchiera = list(board)
-            scacchiera[i] = "q"
-            board = "".join(scacchiera)
-
-#---------------------------------------------------
-# Controlla se è scacco matto
-#---------------------------------------------------
-def checkmate():
-    global tratto
-    if not movegen():
-        print "Scacco matto!"
-        if tratto == 0:
-            print "Vince il nero!"
-        if tratto == 1:
-            print "Vince il bianco!"
-        return 1
-    return 0
-
 
 #----------------------------------------------------
 # Algoritmo di ricerca mosse negamax
@@ -712,28 +651,17 @@ def search(depth, alpha, beta):
     best = -999999999
     boardbackup = board
     trattobackup= tratto
-    listamosse = movegen()
-    if not listamosse:
-        return -999999999999
-    else:
-     for i in listamosse:
+    for i in movegen():
         boardb = board
         trattob = tratto
         move(i[0], i[1])
-        check_promotion()
         if depth == 0:
             score = evaluate()
         else:
             score = - search(depth - 1, -beta, -alpha)
         board = boardb
         tratto = trattob
-        if (score == 999999999999):
-            best = score
-            mossa = i
-            bestmove = mossa
-            return best
-        if mossa == (0,0):
-            mossa = i
+
         if ( score > best ):
             best = score
             mossa = i
@@ -742,8 +670,8 @@ def search(depth, alpha, beta):
         if ( alpha >= beta):
             mossa = i
             return alpha
-     bestmove = mossa
-     return best
+    bestmove = mossa
+    return best
 
 #convert names in unicode chess pieces
 def simbol(string):
@@ -834,7 +762,6 @@ def move(start, end):
     scacchiera[end] = board[start]
     scacchiera[start] = "0"
     board = "".join(scacchiera)
-    check_promotion()
     tratto += 1
     if tratto > 1:
         tratto = 0
@@ -844,7 +771,6 @@ def move(start, end):
 def routine(start,end):
     #routine date mosse iniziali e finali
     #così per rendere piu semplice la futura implementazione uci
-
     if not islegal(start,end):
         if not ischeck(start,end):
             move(start,end)
@@ -852,107 +778,3 @@ def routine(start,end):
             print "Non puoi, andresti sotto scacco!"
     else:
         print "Illegale, bro"
-
-
-# Per giocare
-def gioco_ascii(lato, deep):
-    # Se voglio giocare come bianco in ascii
-    global tratto
-    global board
-    if lato == "bianco":
-        try:
-         while(1):
-            print "\n"
-            show()
-            print "Valutazione: " + str(evaluate())
-            print "Mosse possibili: " + str(len(movegen())) + str(movegen())
-            if checkmate():
-                break
-
-            if tratto == 0 :
-                print "Tocca al Bianco!"
-                print "Cosa vuol muovere, sir?"
-            else:
-                print "Tocca al Nero!"
-
-            sys.stdout.write("Mossa > ")
-            try:
-                #gioco come bianco
-                if tratto == 0:
-                    notazione = raw_input() #lamossa
-                if tratto == 1:
-                    bestscore = search(deep, alpha, beta)
-                    lamossa = str(caseToNotation(bestmove[0],bestmove[1]))
-                    print "Mossa migliore: " + lamossa
-                    notazione = lamossa
-                if notazione == "exit":
-                    print ""
-                    print "Arrivederla!"
-                    break
-
-                start, end = notationToCase(notazione)
-            except :
-                print "Notazione non compresa"
-                print "Usa notazione algebrica del tipo 'e2e4'"
-                continue
-
-            routine(start,end)
-
-        except KeyboardInterrupt:
-            print ""
-            print "Arrivederla!"
-
-    # Se voglio giocare come nero in ascii
-    tratto = 0
-    if lato == "nero":
-        try:
-         while(1):
-            print "\n"
-            show()
-            print "Valutazione: " + str(evaluate())
-            print "Mosse possibili: " + str(len(movegen())) + str(movegen())
-            if checkmate():
-                break
-
-            if tratto == 0 :
-                print "Tocca al Bianco!"
-
-            else:
-                print "Tocca al Nero!"
-                print "Cosa vuol muovere, sir?"
-
-            sys.stdout.write("Mossa > ")
-            try:
-                #gioco come bianco
-                if tratto == 0:
-                    bestscore = search(deep, alpha, beta)
-                    lamossa = str(caseToNotation(bestmove[0],bestmove[1]))
-                    print "Mossa migliore: " + lamossa
-                    notazione = lamossa
-                if tratto == 1:
-                    notazione = raw_input() #lamossa
-                if notazione == "exit":
-                    print ""
-                    print "Arrivederla!"
-                    break
-
-                start, end = notationToCase(notazione)
-            except :
-                print "Notazione non compresa"
-                print "Usa notazione algebrica del tipo 'e2e4'"
-                continue
-
-            routine(start,end)
-
-        except KeyboardInterrupt:
-            print ""
-            print "Arrivederla!"
-
-def inizio():
-    print "Clumsy Pigeon 0.01"
-    print "Per giocare in ascii, digita 'ascii nero|bianco profondita'"
-    scelta = raw_input()
-    if scelta.partition(' ')[0] == "ascii":
-        gioco_ascii(scelta.partition(' ')[2],2)
-tratto = 0
-inizio()
