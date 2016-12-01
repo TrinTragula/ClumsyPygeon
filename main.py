@@ -32,6 +32,14 @@ board = "rnbqkbnr" \
 # Chi muove? tratto = 0 bianchi, tratto = 1 neri
 tratto = 0
 
+# Per l'arrocco
+arroccoNero = 0
+arroccoBianco = 0
+arroccoNeroLungo = 0
+arroccoNeroCorto = 0
+arroccoBiancoLungo = 0
+arroccoBiancoCorto = 0
+
 # Lista pezzi
 pieces = ["r","n","b","q","k","p","R","N","B","Q","K","P"]
 white = ["R","N","B","Q","K","P"]
@@ -626,6 +634,8 @@ def movegen():
     movelist = []
     for i in range(64):
         if tratto == 1:
+            #arrocco
+            if arroccoNero == 0:
             if board[i] in black:
                 for j in range(64):
                     if not islegal(i,j):
@@ -830,6 +840,37 @@ def move(start, end):
     #move a piece in the board
     global board
     global tratto
+
+    #arrocco lungo nero
+    if start == 4 and end == 2 and board[start] == "k":
+        move(4,3)
+        move(3,2)
+        move(0,1)
+        move(1,3)
+        return 0
+    #arroco corto nero
+    if start == 4 and end == 6 and board[start] == "k":
+        move(4,5)
+        move(5,6)
+        move(7,4)
+        move(4,5)
+        return 0
+    #arrocco lungo bianco
+    if start == 60 and end == 58 and board[start] == "K":
+        move(60,59)
+        move(59,58)
+        move(56,57)
+        move(57,59)
+        return 0
+    #arroco corto bianco
+    if start == 60 and end == 62 and board[start] == "K":
+        move(60,61)
+        move(61,62)
+        move(63,60)
+        move(60,61)
+        return 0
+
+
     scacchiera = list(board)
     scacchiera[end] = board[start]
     scacchiera[start] = "0"
@@ -847,6 +888,21 @@ def routine(start,end):
 
     if not islegal(start,end):
         if not ischeck(start,end):
+
+            #condizioni per l'arrocco
+            if board[start] == "k":
+                arroccoNero += 1
+            if board[start] == "K":
+                arroccoBianco += 1
+            if start == 0:
+                arroccoNeroLungo += 1
+            if start == 7:
+                arroccoNeroCorto += 1
+            if start == 63:
+                arroccoBiancoLungo += 1
+            if start == 56
+                arroccoBiancoCorto += 1
+
             move(start,end)
         else:
             print "Non puoi, andresti sotto scacco!"
