@@ -7,9 +7,21 @@ import sys
 from string import ascii_lowercase, ascii_uppercase
 from boardvalue import boardvalue
 from boardvalue import boardvaluenero
+from logo import logo
 
 # Rappresentazione della scacchiera
 board = "rnbqkbnr" \
+        "pppppppp" \
+        "00000000" \
+        "00000000" \
+        "p0p0p0p0" \
+        "00000000" \
+        "PPPPPPPP" \
+        "RNBQKBNR"
+
+
+
+boardbbb = "rnbqkbnr" \
         "pppppppp" \
         "00000000" \
         "00000000" \
@@ -28,6 +40,7 @@ arroccoNeroLungo = 0
 arroccoNeroCorto = 0
 arroccoBiancoLungo = 0
 arroccoBiancoCorto = 0
+isEnpassant = 0
 
 # Lista pezzi
 pieces = ["r","n","b","q","k","p","R","N","B","Q","K","P"]
@@ -52,6 +65,7 @@ def ischeck(start, end):
     global arroccoNeroCorto
     global arroccoBiancoLungo
     global arroccoBiancoCorto
+    global isEnpassant
 
     arroccoNerob = arroccoNero
     arroccoBiancob = arroccoBianco
@@ -59,6 +73,7 @@ def ischeck(start, end):
     arroccoNeroCortob = arroccoNeroCorto
     arroccoBiancoLungob = arroccoBiancoLungo
     arroccoBiancoCortob = arroccoBiancoCorto
+    isEnpassantb = isEnpassant
     trattob = tratto
     boardb = board
     ren = board.index("k")
@@ -82,6 +97,7 @@ def ischeck(start, end):
                 arroccoNeroCorto = arroccoNeroCortob
                 arroccoBiancoLungo = arroccoBiancoLungob
                 arroccoBiancoCorto = arroccoBiancoCortob
+                isEnpassant = isEnpassantb
                 return 1
     if tratto == 0 :
         for i in range(64):
@@ -95,6 +111,7 @@ def ischeck(start, end):
                 arroccoNeroCorto = arroccoNeroCortob
                 arroccoBiancoLungo = arroccoBiancoLungob
                 arroccoBiancoCorto = arroccoBiancoCortob
+                isEnpassant = isEnpassantb
                 return 1
 
     # ripristino le condizioni varie
@@ -106,6 +123,7 @@ def ischeck(start, end):
     arroccoNeroCorto = arroccoNeroCortob
     arroccoBiancoLungo = arroccoBiancoLungob
     arroccoBiancoCorto = arroccoBiancoCortob
+    isEnpassant = isEnpassantb
     return 0
 
 # ---------------------------------------------------
@@ -193,10 +211,14 @@ def islegal( start, end ):
             # Dalla zona di partenza possono spostarsi di due
             if board[end] == "0":
                 if (start/8) == 1 and (board[(start+8)]=="0"):
-                    if end != (start + 8) and end != (start + 16):
+                    if end != (start + 8) and end != (start + 16)\
+                    and ( end != isEnpassant or (end != (start + 9)\
+                     and end!= (start+7)) or ((start/8 != (end/8 - 1) ))):
                         return 1
                 else:
-                    if end != (start+8):
+                    if end != (start+8)\
+                    and ( end != isEnpassant or (end != (start + 9) \
+                    and end!= (start+7)) or ((start/8 != (end/8 - 1) ))):
                         return 1
             # Se invece mangia
             else:
@@ -808,6 +830,7 @@ def search(depth, alpha, beta):
     global arroccoNeroCorto
     global arroccoBiancoLungo
     global arroccoBiancoCorto
+    global isEnpassant
 
     arroccoNerob = arroccoNero
     arroccoBiancob = arroccoBianco
@@ -815,6 +838,7 @@ def search(depth, alpha, beta):
     arroccoNeroCortob = arroccoNeroCorto
     arroccoBiancoLungob = arroccoBiancoLungo
     arroccoBiancoCortob = arroccoBiancoCorto
+    isEnpassantb = isEnpassant
 
     mossa = (0,0)
     best = -999999999
@@ -843,6 +867,7 @@ def search(depth, alpha, beta):
         arroccoNeroCorto = arroccoNeroCortob
         arroccoBiancoLungo = arroccoBiancoLungob
         arroccoBiancoCorto = arroccoBiancoCortob
+        isEnpassant = isEnpassantb
 
         if (score == 999999999999):
             best = score
@@ -953,6 +978,22 @@ def move(start, end):
     global arroccoNeroCorto
     global arroccoBiancoLungo
     global arroccoBiancoCorto
+    global isEnpassant
+
+    #per la cattura enpassant
+    isEnpassant = -1
+    if board[start] == "p":
+        for i in range(8,16):
+            if start == i and (end == (start+16)):
+                isEnpassant = i + 8
+
+    if board[start] == "P":
+        for i in range(48,56):
+            if start == i and (end == (start-16)):
+                isEnpassant = i - 8
+
+
+
 
     #condizioni per l'arrocco
     if board[start] == "k":
@@ -1073,10 +1114,10 @@ def gioco_ascii(lato, deep):
                     break
 
                 start, end = notationToCase(notazione)
-            except Exception,e: print str(e)
-                #print "Notazione non compresa"
-                #print "Usa notazione algebrica del tipo 'e2e4'"
-                #continue
+            except :
+                print "Notazione non compresa"
+                print "Usa notazione algebrica del tipo 'e2e4'"
+                continue
 
             routine(start,end)
 
@@ -1130,6 +1171,7 @@ def gioco_ascii(lato, deep):
             print "Arrivederla!"
 
 def inizio():
+    print logo
     print "Clumsy Pigeon 0.01"
     print "Per giocare in ascii, digita 'ascii nero|bianco profondita'"
     scelta = raw_input()
