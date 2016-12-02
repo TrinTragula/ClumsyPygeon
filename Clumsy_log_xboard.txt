@@ -1,0 +1,287 @@
+xboard
+protover 2
+Risposto a protove 2
+accepted done
+Ignoro il comando
+accepted myname
+Ignoro il comando
+accepted usermove
+Ignoro il comando
+accepted setboard
+Ignoro il comando
+accepted ping
+Ignoro il comando
+accepted sigint
+Ignoro il comando
+accepted variants
+Ignoro il comando
+accepted done
+Ignoro il comando
+new
+risposto a new
+random
+Ignoro il comando
+level 40 5 0
+Ignoro il comando
+post
+Errore (comando sconosciuto)
+hard
+Ignoro il comando
+time 30000
+Errore (comando sconosciuto)
+otim 30000
+Errore (comando sconosciuto)
+usermove e2e4
+Faccio la mossa
+go
+move g8f6
+time 29700
+Errore (comando sconosciuto)
+otim 29950
+Errore (comando sconosciuto)
+usermove d1g4
+Faccio la mossa
+go
+move f6g4
+force
+new
+risposto a new
+random
+Ignoro il comando
+level 40 5 0
+Ignoro il comando
+post
+Errore (comando sconosciuto)
+hard
+Ignoro il comando
+time 30000
+Errore (comando sconosciuto)
+otim 30000
+Errore (comando sconosciuto)
+usermove d2d4
+Faccio la mossa
+go
+move b8c6
+time 29743
+Errore (comando sconosciuto)
+otim 29831
+Errore (comando sconosciuto)
+usermove d4d5
+Faccio la mossa
+go
+move c6b4
+time 29367
+Errore (comando sconosciuto)
+otim 29656
+Errore (comando sconosciuto)
+usermove g1f3
+Faccio la mossa
+go
+move g8f6
+time 28877
+Errore (comando sconosciuto)
+otim 29555
+Errore (comando sconosciuto)
+usermove d1d3
+Faccio la mossa
+go
+move b4d3
+time 27422
+Errore (comando sconosciuto)
+otim 28481
+Errore (comando sconosciuto)
+usermove e1d1
+Faccio la mossa
+go
+move d3f2
+time 25449
+Errore (comando sconosciuto)
+otim 27952
+Errore (comando sconosciuto)
+usermove d1d2
+Faccio la mossa
+go
+move f2h1
+time 23071
+Errore (comando sconosciuto)
+otim 26845
+Errore (comando sconosciuto)
+usermove d2d3
+Faccio la mossa
+go
+move h1f2
+easy
+Errore (comando sconosciuto)
+hard
+Ignoro il comando
+easy
+Errore (comando sconosciuto)
+hard
+Ignoro il comando
+easy
+Errore (comando sconosciuto)
+hard
+Ignoro il comando
+time 21727
+Errore (comando sconosciuto)
+otim 26606
+Errore (comando sconosciuto)
+usermove d3d4
+Faccio la mossa
+go
+move f2e4
+time 20496
+Errore (comando sconosciuto)
+otim 25871
+Errore (comando sconosciuto)
+usermove d5d6
+Faccio la mossa
+go
+move c7c5
+time 20000
+Errore (comando sconosciuto)
+otim 24988
+Errore (comando sconosciuto)
+usermove d4e5
+Faccio la mossa
+go
+move e7e6
+time 19542
+Errore (comando sconosciuto)
+otim 24617
+Errore (comando sconosciuto)
+usermove e5f4
+Faccio la mossa
+go
+move f8d6
+time 19184
+Errore (comando sconosciuto)
+otim 24295
+Errore (comando sconosciuto)
+usermove f3e5
+Faccio la mossa
+go
+move g7g5
+time 18092
+Errore (comando sconosciuto)
+otim 23734
+Errore (comando sconosciuto)
+usermove f4e3
+Faccio la mossa
+go
+move d6e5
+time 17404
+Errore (comando sconosciuto)
+otim 23253
+Errore (comando sconosciuto)
+usermove e3f3
+Faccio la mossa
+go
+move g5g4
+time 16355
+Errore (comando sconosciuto)
+otim 23014
+Errore (comando sconosciuto)
+usermove f3e3
+Faccio la mossa
+go
+move e8f8
+time 15597
+Errore (comando sconosciuto)
+otim 22600
+Errore (comando sconosciuto)
+usermove e3d3
+Faccio la mossa
+go
+move f8g7
+time 14470
+Errore (comando sconosciuto)
+otim 22089
+Errore (comando sconosciuto)
+usermove d3c4
+Faccio la mossa
+go
+move d8b6
+time 13680
+Errore (comando sconosciuto)
+otim 21595
+Errore (comando sconosciuto)
+usermove c2c3
+Faccio la mossa
+go
+move e5h2
+time 12765
+Errore (comando sconosciuto)
+otim 20986
+Errore (comando sconosciuto)
+usermove c1h6
+Faccio la mossa
+go
+move g7h6
+time 12633
+Errore (comando sconosciuto)
+otim 20391
+Errore (comando sconosciuto)
+usermove b1a3
+Faccio la mossa
+go
+move b6b2
+time 12272
+Errore (comando sconosciuto)
+otim 20162
+Errore (comando sconosciuto)
+usermove a3b5
+Faccio la mossa
+go
+move b2a1
+time 11481
+Errore (comando sconosciuto)
+otim 20079
+Errore (comando sconosciuto)
+usermove b5a7
+Faccio la mossa
+go
+move a8a7
+time 11276
+Errore (comando sconosciuto)
+otim 19842
+Errore (comando sconosciuto)
+usermove g2g3
+Faccio la mossa
+go
+move a1f1
+time 10783
+Errore (comando sconosciuto)
+otim 19451
+Errore (comando sconosciuto)
+usermove a2a4
+Faccio la mossa
+go
+move h2g3
+time 10620
+Errore (comando sconosciuto)
+otim 18584
+Errore (comando sconosciuto)
+usermove a4a5
+Faccio la mossa
+go
+move a7a5
+time 10450
+Errore (comando sconosciuto)
+otim 18348
+Errore (comando sconosciuto)
+usermove c4b3
+Faccio la mossa
+go
+move f1e2
+time 10164
+Errore (comando sconosciuto)
+otim 17903
+Errore (comando sconosciuto)
+usermove c3c4
+Faccio la mossa
+go
+move h8d8
+result 1/2-1/2 {Xboard adjudication: Stalemate}
+Errore (comando sconosciuto)
+force
