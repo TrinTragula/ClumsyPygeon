@@ -9,238 +9,33 @@ Reset(1, 0) from gameMode 0
 recognized 'normal' (-1) as variant normal
 GameEnds(0, (null), 2)
 shuffleOpenings = 0
-StartChildProcess (dir=".") python main.py
-96 >first : xboard
+StartChildProcess (dir=".") python src/main.py
+109 >first : xboard
 protover 2
-120 <first : feature done=0
-120 >first : accepted done
-120 <first : feature myname="ClumsyPygeon"
-120 >first : accepted myname
-120 <first : feature usermove=1
-120 >first : accepted usermove
-120 <first : feature setboard=0
-120 >first : accepted setboard
-120 <first : feature ping=0
-120 >first : accepted ping
-120 <first : feature sigint=0
-120 >first : accepted sigint
-120 <first : feature variants="normal"
-120 >first : accepted variants
-120 <first : feature done=1
-120 >first : accepted done
-122 >first : new
+130 <first : feature done=0
+130 >first : accepted done
+130 <first : feature myname="ClumsyPygeon"
+130 >first : accepted myname
+130 <first : feature usermove=1
+130 >first : accepted usermove
+130 <first : feature setboard=0
+130 >first : accepted setboard
+130 <first : feature ping=0
+130 >first : accepted ping
+130 <first : feature sigint=0
+130 >first : accepted sigint
+130 <first : feature variants="normal"
+130 >first : accepted variants
+130 <first : feature done=1
+130 >first : accepted done
+132 >first : new
 random
-122 >first : level 40 5 0
-122 >first : post
-122 >first : hard
-123 <first : Nuova partita!
-nps: w=-1, b=-1
-nps: w=-1, b=-1
-1696 >first : time 30000
-1696 >first : otim 30000
-book hit = (NULL)
-1696 >first : usermove 1696 >first : e2e4
-4696 <first : move g8f6
-5195 >first : time 29700
-5195 >first : otim 29950
-book hit = (NULL)
-5195 >first : usermove 5195 >first : d1g4
-14273 <first : move f6g4
-Reset(1, 1) from gameMode 2
-recognized 'normal' (-1) as variant normal
-GameEnds(0, (null), 2)
-16081 >first : force
-shuffleOpenings = 0
-16082 >first : new
-random
-16082 >first : level 40 5 0
-16082 >first : post
-16082 >first : hard
-16083 <first : Nuova partita!
-nps: w=-1, b=-1
-nps: w=-1, b=-1
-18227 >first : time 30000
-18227 >first : otim 30000
-book hit = (NULL)
-18227 >first : usermove 18227 >first : d2d4
-20788 <first : move b8c6
-22477 >first : time 29743
-22477 >first : otim 29831
-book hit = (NULL)
-22477 >first : usermove 22477 >first : d4d5
-26238 <first : move c6b4
-27982 >first : time 29367
-27983 >first : otim 29656
-book hit = (NULL)
-27983 >first : usermove 27983 >first : g1f3
-32884 <first : move g8f6
-33896 >first : time 28877
-33897 >first : otim 29555
-book hit = (NULL)
-33897 >first : usermove 33897 >first : d1d3
-48444 <first : move b4d3
-59189 >first : time 27422
-59189 >first : otim 28481
-book hit = (NULL)
-59189 >first : usermove 59189 >first : e1d1
-78919 <first : move d3f2
-84209 >first : time 25449
-84209 >first : otim 27952
-book hit = (NULL)
-84209 >first : usermove 84209 >first : d1d2
-107991 <first : move f2h1
-119056 >first : time 23071
-119056 >first : otim 26845
-book hit = (NULL)
-119056 >first : usermove 119057 >first : d2d3
-BackwardInner(12), current 13, forward 13
-BackwardInner(11), current 12, forward 13
-BackwardInner(10), current 11, forward 13
-BackwardInner(9), current 10, forward 13
-BackwardInner(8), current 9, forward 13
-BackwardInner(7), current 8, forward 13
-BackwardInner(6), current 7, forward 13
-BackwardInner(5), current 6, forward 13
-BackwardInner(4), current 5, forward 13
-BackwardInner(3), current 4, forward 13
-BackwardInner(2), current 3, forward 13
-BackwardInner(1), current 2, forward 13
-BackwardInner(0), current 1, forward 13
-BackwardInner(0), current 0, forward 13
-PauseEvent(): pausing 0
-127938 >first : easy
-PauseEvent(): pausing 1
-128756 >first : hard
-nps: w=-1, b=-1
-ForwardInner(13), current 0, forward 13
-PauseEvent(): pausing 0
-129649 >first : easy
-PauseEvent(): pausing 1
-129776 >first : hard
-nps: w=-1, b=-1
-PauseEvent(): pausing 0
-129998 >first : easy
-ForwardInner(14), current 13, forward 13
-ForwardInner(14), current 13, forward 13
-ForwardInner(14), current 13, forward 13
-ForwardInner(14), current 13, forward 13
-ForwardInner(14), current 13, forward 13
-ForwardInner(14), current 13, forward 13
-PauseEvent(): pausing 1
-132001 >first : hard
-nps: w=-1, b=-1
-133729 <first : move h1f2
-136120 >first : time 21727
-136120 >first : otim 26606
-book hit = (NULL)
-136120 >first : usermove 136120 >first : d3d4
-148422 <first : move f2e4
-155778 >first : time 20496
-155778 >first : otim 25871
-book hit = (NULL)
-155778 >first : usermove 155778 >first : d5d6
-160746 <first : move c7c5
-169570 >first : time 20000
-169570 >first : otim 24988
-book hit = (NULL)
-169570 >first : usermove 169570 >first : d4e5
-174150 <first : move e7e6
-177857 >first : time 19542
-177857 >first : otim 24617
-book hit = (NULL)
-177857 >first : usermove 177857 >first : e5f4
-181428 <first : move f8d6
-184650 >first : time 19184
-184650 >first : otim 24295
-book hit = (NULL)
-184650 >first : usermove 184650 >first : f3e5
-195570 <first : move g7g5
-201184 >first : time 18092
-201184 >first : otim 23734
-book hit = (NULL)
-201185 >first : usermove 201185 >first : f4e3
-208065 <first : move d6e5
-212875 >first : time 17404
-212875 >first : otim 23253
-book hit = (NULL)
-212876 >first : usermove 212876 >first : e3f3
-223368 <first : move g5g4
-225757 >first : time 16355
-225757 >first : otim 23014
-book hit = (NULL)
-225758 >first : usermove 225758 >first : f3e3
-233338 <first : move e8f8
-237475 >first : time 15597
-237475 >first : otim 22600
-book hit = (NULL)
-237475 >first : usermove 237475 >first : e3d3
-248745 <first : move f8g7
-BackwardInner(31), current 32, forward 32
-BackwardInner(30), current 31, forward 32
-BackwardInner(29), current 30, forward 32
-BackwardInner(28), current 29, forward 32
-ForwardInner(29), current 28, forward 32
-ForwardInner(30), current 29, forward 32
-ForwardInner(31), current 30, forward 32
-ForwardInner(32), current 31, forward 32
-ForwardInner(33), current 32, forward 32
-253859 >first : time 14470
-253859 >first : otim 22089
-book hit = (NULL)
-253860 >first : usermove 253860 >first : d3c4
-261753 <first : move d8b6
-266690 >first : time 13680
-266691 >first : otim 21595
-book hit = (NULL)
-266691 >first : usermove 266691 >first : c2c3
-275846 <first : move e5h2
-281945 >first : time 12765
-281945 >first : otim 20986
-book hit = (NULL)
-281945 >first : usermove 281945 >first : c1h6
-283264 <first : move g7h6
-289208 >first : time 12633
-289208 >first : otim 20391
-book hit = (NULL)
-289208 >first : usermove 289208 >first : b1a3
-292811 <first : move b6b2
-295098 >first : time 12272
-295098 >first : otim 20162
-book hit = (NULL)
-295098 >first : usermove 295098 >first : a3b5
-303011 <first : move b2a1
-303841 >first : time 11481
-303841 >first : otim 20079
-book hit = (NULL)
-303841 >first : usermove 303841 >first : b5a7
-305891 <first : move a8a7
-308265 >first : time 11276
-308265 >first : otim 19842
-book hit = (NULL)
-308266 >first : usermove 308266 >first : g2g3
-313201 <first : move a1f1
-317107 >first : time 10783
-317107 >first : otim 19451
-book hit = (NULL)
-317107 >first : usermove 317107 >first : a2a4
-318729 <first : move h2g3
-327401 >first : time 10620
-327401 >first : otim 18584
-book hit = (NULL)
-327401 >first : usermove 327401 >first : a4a5
-329101 <first : move a7a5
-331464 >first : time 10450
-331464 >first : otim 18348
-book hit = (NULL)
-331464 >first : usermove 331464 >first : c4b3
-334328 <first : move f1e2
-338783 >first : time 10164
-338783 >first : otim 17903
-book hit = (NULL)
-338783 >first : usermove 338783 >first : c3c4
-338787 <first : move h8d8
-GameEnds(28, Xboard adjudication: Stalemate, 4)
-338788 >first : result 1/2-1/2 {Xboard adjudication: Stalemate}
-338788 >first : force
-GameEnds(28, Xboard adjudication: Stalemate, 2)
-356423 >first : quit
+132 >first : level 40 5 0
+132 >first : post
+132 >first : hard
+132 >first : easy
+132 <first : Nuova partita!
+GameEnds(29, xboard exit, 2)
+311340 >first : result * {xboard exit}
+311340 >first : force
+311340 >first : quit
